@@ -114,7 +114,6 @@ istream &operator<<(istream &is, array<T, arrSize> &A) {
         is >> a;
     return is;
 }
-
 /*/---------------------------STL overloaded I/O----------------------/*/
 
 
@@ -137,11 +136,25 @@ TV void __read(T &t, V &... v) {
     __read(t);
     __read(v...);
 }
+/*/---------------------------I/O Ports----------------------/*/
 
+/*/---------------------------myFunctions----------------------/*/
 int power(int x, int y) {
     int res = 1;
     while (y)
         res = !(y & 1) ?: res * x, y >>= 1, x *= x;
     return res;
 }
-/*/---------------------------I/O Ports----------------------/*/
+
+mt19937_64 __MT19337GEN__(chrono::steady_clock::now().time_since_epoch().count());
+
+inline int64_t random(int l, int r) {
+    uniform_int_distribution<int> generator(l, r);
+    return generator(__MT19337GEN__);
+}
+
+inline int64_t random() {
+    uniform_int_distribution<int> generator(LLONG_MIN, LLONG_MAX);
+    return generator(__MT19337GEN__);
+}
+/*/---------------------------myFunctions----------------------/*/
