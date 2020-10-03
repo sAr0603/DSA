@@ -18,9 +18,13 @@ using namespace std;
 #define TT template <class T>
 #define LR template <class L, class R>
 #define TV template<typename T, typename... V>
-#define deb(...) cerr << "L(" << __LINE__ << ")*[" << #__VA_ARGS__ << "]: [", __write(__VA_ARGS__)
+#ifndef ONLINE_JUDGE
+    #define deb(...) cerr << "L(" << __LINE__ << ")*[" << #__VA_ARGS__ << "]: [", __write(__VA_ARGS__)
+#else
+    #define deb(...)
+#endif
 #define __timeStart auto __start_time = chrono::high_resolution_clock::now()
-#define __timeEnd cout << "elapsed_time = " << (chrono::duration_cast<chrono::milliseconds>\
+#define __timeEnd cerr << "\nelapsed_time = " << (chrono::duration_cast<chrono::milliseconds>\
                   (chrono::high_resolution_clock::now() - __start_time).count()) << " ms\n"
 /*/---------------------------macros----------------------/*/
 
