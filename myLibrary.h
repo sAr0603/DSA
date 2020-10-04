@@ -128,7 +128,7 @@ void __write() {
     cerr << "]\n";
 }
 
-TV void __write(T &t, V &... v) {
+TV void __write(const T &t, const V &... v) {
     cerr << t;
     if (sizeof...(v))
         cerr << ", ";
