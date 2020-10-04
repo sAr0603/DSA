@@ -6,7 +6,6 @@ using namespace __gnu_pbds;
 using namespace std;
 /*/---------------------------imports----------------------/*/
 
-
 /*/---------------------------macros----------------------/*/
 #define int long long
 #define endl '\n'
@@ -14,20 +13,24 @@ using namespace std;
 #define isOdd(x) ((x)&1)
 #define isEven(x) (!((x)&1))
 #define all(x) (x).begin(), (x).end()
-#define read(...) int __VA_ARGS__;__read(__VA_ARGS__)
+#define read(...)    \
+    int __VA_ARGS__; \
+    __read(__VA_ARGS__)
 #define TT template <class T>
 #define LR template <class L, class R>
-#define TV template<typename T, typename... V>
+#define TV template <typename T, typename... V>
 #ifndef ONLINE_JUDGE
-    #define deb(...) cerr << "L(" << __LINE__ << ")*[" << #__VA_ARGS__ << "]: [", __write(__VA_ARGS__)
+#define deb(...) cerr << "L(" << __LINE__ << ")*[" << #__VA_ARGS__ << "]: [", __write(__VA_ARGS__)
 #else
-    #define deb(...)
+#define deb(...)
 #endif
 #define __timeStart auto __start_time = chrono::high_resolution_clock::now()
-#define __timeEnd cerr << "\nelapsed_time = " << (chrono::duration_cast<chrono::milliseconds>\
-                  (chrono::high_resolution_clock::now() - __start_time).count()) << " ms\n"
-/*/---------------------------macros----------------------/*/
+#define __timeEnd                                                                                       \
+    auto __stop_time = std::chrono::high_resolution_clock::now();                                       \
+    auto __duration = std::chrono::duration_cast<std::chrono::nanoseconds>(__stop_time - __start_time); \
+    cerr << "Time taken : " << ((long double)__duration.count()) / ((long double)1e9) << "s " << endl;
 
+/*/---------------------------macros----------------------/*/
 
 /*/---------------------------STL overloaded I/O----------------------/*/
 TT istream &operator>>(istream &is, vector<T> &V);
@@ -120,7 +123,6 @@ istream &operator<<(istream &is, array<T, arrSize> &A) {
 }
 /*/---------------------------STL overloaded I/O----------------------/*/
 
-
 /*/---------------------------I/O Ports----------------------/*/
 void __write() {
     cerr << "]\n";
@@ -128,7 +130,8 @@ void __write() {
 
 TV void __write(T &t, V &... v) {
     cerr << t;
-    if (sizeof...(v)) cerr << ", ";
+    if (sizeof...(v))
+        cerr << ", ";
     __write(v...);
 }
 
