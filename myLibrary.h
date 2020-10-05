@@ -28,26 +28,26 @@ using namespace std;
 #define __timeEnd                                                                                       \
     auto __stop_time = std::chrono::high_resolution_clock::now();                                       \
     auto __duration = std::chrono::duration_cast<std::chrono::nanoseconds>(__stop_time - __start_time); \
-    cerr << "Time taken : " << ((long double)__duration.count()) / ((long double)1e9) << "s " << endl;
+    cerr << "Time taken : " << ((long double)__duration.count()) / ((long double)1e9) << "s " << endl
 
 /*/---------------------------macros----------------------/*/
 
 /*/---------------------------STL overloaded I/O----------------------/*/
 TT istream &operator>>(istream &is, vector<T> &V);
 
-TT ostream &operator<<(ostream &os, vector<T> &V);
+TT ostream &operator<<(ostream &os, const vector<T> &V);
 
-TT ostream &operator<<(ostream &os, unordered_set<T> &S);
+TT ostream &operator<<(ostream &os, const unordered_set<T> &S);
 
-TT ostream &operator<<(ostream &os, multiset<T> &S);
+TT ostream &operator<<(ostream &os, const multiset<T> &S);
 
-TT ostream &operator<<(ostream &os, set<T> &S);
+TT ostream &operator<<(ostream &os, const set<T> &S);
 
-LR ostream &operator<<(ostream &os, pair<L, R> &P);
+LR ostream &operator<<(ostream &os, const pair<L, R> &P);
 
-LR ostream &operator<<(ostream &os, map<L, R> &M);
+LR ostream &operator<<(ostream &os, const map<L, R> &M);
 
-LR ostream &operator<<(ostream &os, unordered_map<L, R> &M);
+LR ostream &operator<<(ostream &os, const unordered_map<L, R> &M);
 
 template<typename T, size_t arrSize>
 ostream &operator<<(ostream &os, array<T, arrSize> &A);
@@ -61,46 +61,46 @@ TT istream &operator>>(istream &is, vector<T> &V) {
     return is;
 }
 
-TT ostream &operator<<(ostream &os, vector<T> &V) {
+TT ostream &operator<<(ostream &os, const vector<T> &V) {
     os << "[ ";
     for (auto &v : V)
         os << v << " ";
     return os << "]";
 }
 
-TT ostream &operator<<(ostream &os, unordered_set<T> &S) {
+TT ostream &operator<<(ostream &os, const unordered_set<T> &S) {
     os << "{ ";
     for (auto &s : S)
         os << s << " ";
     return os << "}";
 }
 
-TT ostream &operator<<(ostream &os, multiset<T> &S) {
+TT ostream &operator<<(ostream &os, const multiset<T> &S) {
     os << "{ ";
     for (auto &s : S)
         os << s << " ";
     return os << "}";
 }
 
-TT ostream &operator<<(ostream &os, set<T> &S) {
+TT ostream &operator<<(ostream &os, const set<T> &S) {
     os << "{ ";
     for (auto &s : S)
         os << s << " ";
     return os << "}";
 }
 
-LR ostream &operator<<(ostream &os, pair<L, R> &P) {
+LR ostream &operator<<(ostream &os, const pair<L, R> &P) {
     return os << "(" << P.first << "," << P.second << ")";
 }
 
-LR ostream &operator<<(ostream &os, map<L, R> &M) {
+LR ostream &operator<<(ostream &os, const map<L, R> &M) {
     os << "{ ";
     for (auto &m : M)
         os << "(" << m.first << ":" << m.second << ") ";
     return os << "}";
 }
 
-LR ostream &operator<<(ostream &os, unordered_map<L, R> &M) {
+LR ostream &operator<<(ostream &os, const unordered_map<L, R> &M) {
     os << "{ ";
     for (auto &m : M)
         os << "(" << m.first << ":" << m.second << ") ";
@@ -108,7 +108,7 @@ LR ostream &operator<<(ostream &os, unordered_map<L, R> &M) {
 }
 
 template<typename T, size_t arrSize>
-ostream &operator<<(ostream &os, array<T, arrSize> &A) {
+ostream &operator<<(ostream &os, const array<T, arrSize> &A) {
     os << "[ ";
     for (auto &a : A)
         os << a << " ";
