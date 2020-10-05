@@ -5,8 +5,8 @@ using namespace std;
 #define isOdd(x) ((x)&1)
 
 /*Making them global to enable maximum size possible -> Part of Iterative segNode class*/
-array<int, (int) (4 * 2 * 10e5)> segTree; // 1 - index based segTree
-array<int, (int) (4 * 2 * 10e5)> __lazy;//Change size of segTree by getting proper value from segSize(int n) fn
+array<int, (int) (2 * 2 * 10e5)> segTree; // 1 - index based segTree
+array<int, (int) (2 * 2 * 10e5)> __lazy;//Change size of segTree by getting proper value from segSize(int n) fn
 /*IF YOU COMMENT OUT __lazy then fns depending on it will throw compiler errors*/
 
 
