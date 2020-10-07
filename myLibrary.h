@@ -1,5 +1,6 @@
 /*/---------------------------imports----------------------/*/
 #include <bits/stdc++.h>
+
 #include <ext/pb_ds/assoc_container.hpp>
 
 using namespace __gnu_pbds;
@@ -16,8 +17,8 @@ using namespace std;
 #define read(...)    \
     int __VA_ARGS__; \
     __read(__VA_ARGS__)
-#define TT template <class T>
-#define LR template <class L, class R>
+#define TT template <typename T>
+#define LR template <typename L, typename R>
 #define TV template <typename T, typename... V>
 #ifndef ONLINE_JUDGE
 #define deb(...) cerr << "L(" << __LINE__ << ")*[" << #__VA_ARGS__ << "]: [", __write(__VA_ARGS__)
@@ -33,9 +34,12 @@ using namespace std;
 /*/---------------------------macros----------------------/*/
 
 /*/---------------------------STL overloaded I/O----------------------/*/
-TT istream &operator>>(istream &is, vector<T> &V);
+TT
+using vec = vector<T>;
 
-TT ostream &operator<<(ostream &os, const vector<T> &V);
+TT istream &operator>>(istream &is, vec<T> &V);
+
+TT ostream &operator<<(ostream &os, const vec<T> &V);
 
 TT ostream &operator<<(ostream &os, const unordered_set<T> &S);
 
@@ -49,19 +53,19 @@ LR ostream &operator<<(ostream &os, const map<L, R> &M);
 
 LR ostream &operator<<(ostream &os, const unordered_map<L, R> &M);
 
-template<typename T, size_t arrSize>
+template <typename T, size_t arrSize>
 ostream &operator<<(ostream &os, array<T, arrSize> &A);
 
-template<typename T, size_t arrSize>
+template <typename T, size_t arrSize>
 istream &operator<<(istream &is, array<T, arrSize> &A);
 
-TT istream &operator>>(istream &is, vector<T> &V) {
+TT istream &operator>>(istream &is, vec<T> &V) {
     for (auto &e : V)
         is >> e;
     return is;
 }
 
-TT ostream &operator<<(ostream &os, const vector<T> &V) {
+TT ostream &operator<<(ostream &os, const vec<T> &V) {
     os << "[ ";
     for (auto &v : V)
         os << v << " ";
@@ -107,7 +111,7 @@ LR ostream &operator<<(ostream &os, const unordered_map<L, R> &M) {
     return os << "}";
 }
 
-template<typename T, size_t arrSize>
+template <typename T, size_t arrSize>
 ostream &operator<<(ostream &os, const array<T, arrSize> &A) {
     os << "[ ";
     for (auto &a : A)
@@ -115,7 +119,7 @@ ostream &operator<<(ostream &os, const array<T, arrSize> &A) {
     return os << "]";
 }
 
-template<typename T, size_t arrSize>
+template <typename T, size_t arrSize>
 istream &operator<<(istream &is, array<T, arrSize> &A) {
     for (auto &a : A)
         is >> a;
