@@ -17,9 +17,6 @@ using namespace std;
 #define read(...)    \
     int __VA_ARGS__; \
     __read(__VA_ARGS__)
-#define TT template <typename T>
-#define LR template <typename L, typename R>
-#define TV template <typename T, typename... V>
 #ifndef ONLINE_JUDGE
 #define deb(...) cerr << "L(" << __LINE__ << ")*[" << #__VA_ARGS__ << "]: [", __write(__VA_ARGS__)
 #else
@@ -34,90 +31,106 @@ using namespace std;
 /*/---------------------------macros----------------------/*/
 
 /*/---------------------------STL overloaded I/O----------------------/*/
-TT istream &operator>>(istream &is, vector<T> &V);
+template<class T>
+istream &operator>>(istream &is, vector<T> &V);
 
-TT ostream &operator<<(ostream &os, const vector<T> &V);
+template<class T>
+ostream &operator<<(ostream &os, const vector<T> &V);
 
-TT ostream &operator<<(ostream &os, const unordered_set<T> &S);
+template<class T>
+ostream &operator<<(ostream &os, const unordered_set<T> &S);
 
-TT ostream &operator<<(ostream &os, const multiset<T> &S);
+template<class T>
+ostream &operator<<(ostream &os, const multiset<T> &S);
 
-TT ostream &operator<<(ostream &os, const set<T> &S);
+template<class T>
+ostream &operator<<(ostream &os, const set<T> &S);
 
-LR ostream &operator<<(ostream &os, const pair<L, R> &P);
+template<class L, class R>
+ostream &operator<<(ostream &os, const pair<L, R> &P);
 
-LR ostream &operator<<(ostream &os, const map<L, R> &M);
+template<class L, class R>
+ostream &operator<<(ostream &os, const map<L, R> &M);
 
-LR ostream &operator<<(ostream &os, const unordered_map<L, R> &M);
+template<class L, class R>
+ostream &operator<<(ostream &os, const unordered_map<L, R> &M);
 
-template<typename T, size_t arrSize>
-ostream &operator<<(ostream &os, array<T, arrSize> &A);
+template<class T, size_t S>
+ostream &operator<<(ostream &os, array<T, S> &A);
 
-template<typename T, size_t arrSize>
-istream &operator<<(istream &is, array<T, arrSize> &A);
+template<class T, size_t S>
+istream &operator<<(istream &is, array<T, S> &A);
 
-TT istream &operator>>(istream &is, vector<T> &V) {
+template<class T>
+istream &operator>>(istream &is, vector<T> &V) {
     for (auto &e : V)
         is >> e;
     return is;
 }
 
-TT ostream &operator<<(ostream &os, const vector<T> &V) {
+template<class T>
+ostream &operator<<(ostream &os, const vector<T> &V) {
     os << "[ ";
     for (auto &v : V)
         os << v << " ";
     return os << "]";
 }
 
-TT ostream &operator<<(ostream &os, const unordered_set<T> &S) {
+template<class T>
+ostream &operator<<(ostream &os, const unordered_set<T> &S) {
     os << "{ ";
     for (auto &s : S)
         os << s << " ";
     return os << "}";
 }
 
-TT ostream &operator<<(ostream &os, const multiset<T> &S) {
+template<class T>
+ostream &operator<<(ostream &os, const multiset<T> &S) {
     os << "{ ";
     for (auto &s : S)
         os << s << " ";
     return os << "}";
 }
 
-TT ostream &operator<<(ostream &os, const set<T> &S) {
+template<class T>
+ostream &operator<<(ostream &os, const set<T> &S) {
     os << "{ ";
     for (auto &s : S)
         os << s << " ";
     return os << "}";
 }
 
-LR ostream &operator<<(ostream &os, const pair<L, R> &P) {
+template<class L, class R>
+ostream &operator<<(ostream &os, const pair<L, R> &P) {
     return os << "(" << P.first << "," << P.second << ")";
 }
 
-LR ostream &operator<<(ostream &os, const map<L, R> &M) {
+template<class L, class R>
+ostream &operator<<(ostream &os, const map<L, R> &M) {
     os << "{ ";
     for (auto &m : M)
         os << "(" << m.first << ":" << m.second << ") ";
     return os << "}";
 }
 
-LR ostream &operator<<(ostream &os, const unordered_map<L, R> &M) {
+template<class L, class R>
+ostream &operator<<(ostream &os, const unordered_map<L, R> &M) {
     os << "{ ";
     for (auto &m : M)
         os << "(" << m.first << ":" << m.second << ") ";
     return os << "}";
 }
 
-template<typename T, size_t arrSize>
-ostream &operator<<(ostream &os, const array<T, arrSize> &A) {
+template<class T, size_t S>
+ostream &operator<<(ostream &os, const array<T, S> &A) {
     os << "[ ";
     for (auto &a : A)
         os << a << " ";
     return os << "]";
 }
 
-template<typename T, size_t arrSize>
-istream &operator<<(istream &is, array<T, arrSize> &A) {
+template<class T, size_t S>
+istream &operator<<(istream &is, array<T, S> &A) {
     for (auto &a : A)
         is >> a;
     return is;
@@ -129,18 +142,21 @@ void __write() {
     cerr << "]\n";
 }
 
-TV void __write(const T &t, const V &... v) {
+template<class T, class...V>
+void __write(const T &t, const V &... v) {
     cerr << t;
     if (sizeof...(v))
         cerr << ", ";
     __write(v...);
 }
 
-TT void __read(T &x) {
+template<class T>
+void __read(T &x) {
     cin >> x;
 }
 
-TV void __read(T &t, V &... v) {
+template<class T, class...V>
+void __read(T &t, V &... v) {
     __read(t);
     __read(v...);
 }
