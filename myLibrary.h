@@ -71,7 +71,7 @@ istream &operator>>(istream &is, vector<T> &V) {
 template<class T>
 ostream &operator<<(ostream &os, const vector<T> &V) {
     os << "[ ";
-    for (auto &v : V)
+    for (const auto &v : V)
         os << v << " ";
     return os << "]";
 }
@@ -79,7 +79,7 @@ ostream &operator<<(ostream &os, const vector<T> &V) {
 template<class T>
 ostream &operator<<(ostream &os, const unordered_set<T> &S) {
     os << "{ ";
-    for (auto &s : S)
+    for (const auto &s : S)
         os << s << " ";
     return os << "}";
 }
@@ -87,7 +87,7 @@ ostream &operator<<(ostream &os, const unordered_set<T> &S) {
 template<class T>
 ostream &operator<<(ostream &os, const multiset<T> &S) {
     os << "{ ";
-    for (auto &s : S)
+    for (const auto &s : S)
         os << s << " ";
     return os << "}";
 }
@@ -95,7 +95,7 @@ ostream &operator<<(ostream &os, const multiset<T> &S) {
 template<class T>
 ostream &operator<<(ostream &os, const set<T> &S) {
     os << "{ ";
-    for (auto &s : S)
+    for (const auto &s : S)
         os << s << " ";
     return os << "}";
 }
@@ -108,7 +108,7 @@ ostream &operator<<(ostream &os, const pair<L, R> &P) {
 template<class L, class R>
 ostream &operator<<(ostream &os, const map<L, R> &M) {
     os << "{ ";
-    for (auto &m : M)
+    for (const auto &m : M)
         os << "(" << m.first << ":" << m.second << ") ";
     return os << "}";
 }
@@ -116,7 +116,7 @@ ostream &operator<<(ostream &os, const map<L, R> &M) {
 template<class L, class R>
 ostream &operator<<(ostream &os, const unordered_map<L, R> &M) {
     os << "{ ";
-    for (auto &m : M)
+    for (const auto &m : M)
         os << "(" << m.first << ":" << m.second << ") ";
     return os << "}";
 }
@@ -124,14 +124,14 @@ ostream &operator<<(ostream &os, const unordered_map<L, R> &M) {
 template<class T, size_t S>
 ostream &operator<<(ostream &os, const array<T, S> &A) {
     os << "[ ";
-    for (auto &a : A)
+    for (const auto &a : A)
         os << a << " ";
     return os << "]";
 }
 
 template<class T, size_t S>
 istream &operator<<(istream &is, array<T, S> &A) {
-    for (auto &a : A)
+    for (const auto &a : A)
         is >> a;
     return is;
 }
