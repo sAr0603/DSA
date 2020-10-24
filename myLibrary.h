@@ -8,13 +8,11 @@ using namespace std;
 /*/---------------------------imports----------------------/*/
 
 /*/---------------------------macros----------------------/*/
-
 #define endl '\n'
 using ll = long long;
 const int MOD = 1000000007;
 #define isOdd(x) ((x)&1)
 #define isEven(x) (!((x)&1))
-
 #define all(x) (x).begin(), (x).end()
 #define read(...)    \
     ll __VA_ARGS__; \
@@ -29,7 +27,6 @@ const int MOD = 1000000007;
     auto __stop_time = std::chrono::high_resolution_clock::now();                                       \
     auto __duration = std::chrono::duration_cast<std::chrono::nanoseconds>(__stop_time - __start_time); \
     cerr << "Time taken : " << ((long double)__duration.count()) / ((long double)1e9) << "s " << endl
-
 /*/---------------------------macros----------------------/*/
 
 /*/---------------------------STL overloaded I/O----------------------/*/
@@ -165,8 +162,8 @@ void __read(T &t, V &... v) {
 /*/---------------------------I/O Ports----------------------/*/
 
 /*/---------------------------myFunctions----------------------/*/
-int power(int x, int y, int mod = LLONG_MAX) {
-    int res = 1;
+ll power(ll x, ll y, ll mod = LLONG_MAX) {
+    ll res = 1;
     x = x % mod;
     while (y > 0) {
         if (y & 1)
@@ -179,13 +176,13 @@ int power(int x, int y, int mod = LLONG_MAX) {
 
 mt19937_64 __MT19337GEN__(chrono::steady_clock::now().time_since_epoch().count());
 
-inline int64_t random(int l, int r) {
-    uniform_int_distribution<int> generator(l, r);
+inline int64_t random(ll l, ll r) {
+    uniform_int_distribution<ll> generator(l, r);
     return generator(__MT19337GEN__);
 }
 
 inline int64_t random() {
-    uniform_int_distribution<int> generator(LLONG_MIN, LLONG_MAX);
+    uniform_int_distribution<ll> generator(LLONG_MIN, LLONG_MAX);
     return generator(__MT19337GEN__);
 }
 /*/---------------------------myFunctions----------------------/*/
