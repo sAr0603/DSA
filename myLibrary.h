@@ -8,9 +8,10 @@ using namespace std;
 /*/---------------------------imports----------------------/*/
 
 /*/---------------------------macros----------------------/*/
-using ll = long long;
+
 #define endl '\n'
-#define MOD 1000000007
+using ll = long long;
+const int MOD = 10e7;
 #define isOdd(x) ((x)&1)
 #define isEven(x) (!((x)&1))
 
