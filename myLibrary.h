@@ -9,8 +9,8 @@ using namespace std;
 
 /*/---------------------------macros----------------------/*/
 #define endl '\n'
-using ll = long long;
-const int MOD = 1000000007;
+#define ll long long
+const ll MOD = 1000000007;
 #define isOdd(x) ((x)&1)
 #define isEven(x) (!((x)&1))
 #define all(x) (x).begin(), (x).end()
