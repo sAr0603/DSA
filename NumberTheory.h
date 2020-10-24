@@ -261,27 +261,29 @@ struct combinatorics {
 };
 
 namespace modulo {
-    template<const int &modSeed>
+    using intType = ll;
+
+    template<const intType &modSeed>
     struct __mint {
         int val;
 
-        __mint(int64_t v = 0) {
+        __mint(ll v = 0) {
             if (v < 0) v = v % modSeed + modSeed;
             if (v >= modSeed) v %= modSeed;
             val = int(v);
         }
 
-        __mint(uint64_t v) {
+        __mint(unsigned ll v) {
             if (v >= modSeed) v %= modSeed;
             val = int(v);
         }
 
-        __mint(int v) : __mint(int64_t(v)) {}
+        __mint(int v) : __mint((ll) (v)) {}
 
-        __mint(unsigned v) : __mint(uint64_t(v)) {}
+        __mint(unsigned v) : __mint((ll) (v)) {}
 
-        static int inv_mod(int a, int m = modSeed) {
-            int g = m, r = a, x = 0, y = 1;
+        static ll inv_mod(ll a, ll m = modSeed) {
+            ll g = m, r = a, x = 0, y = 1;
             while (r != 0) {
                 int q = g / r;
                 g %= r;
@@ -296,9 +298,9 @@ namespace modulo {
 
         explicit operator unsigned() const { return val; }
 
-        explicit operator int64_t() const { return val; }
+        explicit operator ll() const { return val; }
 
-        explicit operator uint64_t() const { return val; }
+        explicit operator unsigned ll() const { return val; }
 
         explicit operator double() const { return val; }
 
@@ -316,7 +318,7 @@ namespace modulo {
             return *this;
         }
 
-        static unsigned fast_mod(uint64_t x, unsigned m = modSeed) {
+        static unsigned fast_mod(ll x, ll m = modSeed) {
 #if !defined(_WIN32) || defined(_WIN64)
             return unsigned(x % m);
 #endif
@@ -331,7 +333,7 @@ namespace modulo {
         }
 
         __mint &operator*=(const __mint &other) {
-            val = fast_mod(uint64_t(val) * other.val);
+            val = fast_mod((unsigned ll) (val) * other.val);
             return *this;
         }
 
@@ -389,7 +391,7 @@ namespace modulo {
             return inv_mod(val);
         }
 
-        __mint pow(int64_t p) const {
+        __mint pow(ll p) const {
             if (p < 0)
                 return inv().pow(-p);
 
@@ -411,17 +413,17 @@ namespace modulo {
         friend ostream &operator<<(ostream &os, const __mint &m) { return os << m.val; }
     };
 
-    template<const int &modSeed>
+    template<const intType &modSeed>
     struct metrics {
         using mint = __mint<modSeed>;
         vector<mint> inv, fac, invFac;
         int prepared_maximum = -1;
 
-        metrics(int64_t maximum) {
+        explicit metrics(ll maximum) {
             static int prepare_calls = 0;
             if (prepare_calls++ == 0) {
                 // Make sure modSeed is prime, which is necessary for the inverse algorithm below.
-                for (int p = 2; p * p <= modSeed; p += p % 2 + 1)
+                for (ll p = 2; p * p <= modSeed; p += p % 2 + 1)
                     assert(modSeed % p != 0);
                 inv = {0, 1};
                 fac = invFac = {1, 1};
@@ -433,32 +435,32 @@ namespace modulo {
                 fac.resize(maximum + 1);
                 invFac.resize(maximum + 1);
 
-                for (int i = prepared_maximum + 1; i <= maximum; i++) {
+                for (ll i = prepared_maximum + 1; i <= maximum; i++) {
                     inv[i] = inv[modSeed % i] * (modSeed - modSeed / i);
                     fac[i] = i * fac[i - 1];
                     invFac[i] = inv[i] * invFac[i - 1];
                 }
 
-                prepared_maximum = int(maximum);
+                prepared_maximum = (ll) (maximum);
             }
         }
 
-        mint nCr(int64_t n, int64_t r) {
+        mint nCr(ll n, ll r) {
             if (r < 0 || r > n) return 0;
             return fac[n] * invFac[r] * invFac[n - r];
         }
 
-        mint inv_nCr(int64_t n, int64_t r) {
+        mint inv_nCr(ll n, ll r) {
             assert(0 <= r && r <= n);
             return invFac[n] * fac[r] * fac[n - r];
         }
 
-        mint nPr(int64_t n, int64_t r) {
+        mint nPr(ll n, ll r) {
             if (r < 0 || r > n) return 0;
             return fac[n] * invFac[n - r];
         }
 
-        mint inv_nPr(int64_t n, int64_t r) {
+        mint inv_nPr(ll n, ll r) {
             assert(0 <= r && r <= n);
             return invFac[n] * fac[n - r];
         }
