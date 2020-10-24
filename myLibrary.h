@@ -13,6 +13,7 @@ using namespace std;
 #define MOD 1000000007
 #define isOdd(x) ((x)&1)
 #define isEven(x) (!((x)&1))
+
 #define all(x) (x).begin(), (x).end()
 #define read(...)    \
     int __VA_ARGS__; \
@@ -71,7 +72,7 @@ istream &operator>>(istream &is, vector<T> &V) {
 template<class T>
 ostream &operator<<(ostream &os, const vector<T> &V) {
     os << "[ ";
-    for (const auto &v : V)
+    for (auto &v : V)
         os << v << " ";
     return os << "]";
 }
@@ -79,7 +80,7 @@ ostream &operator<<(ostream &os, const vector<T> &V) {
 template<class T>
 ostream &operator<<(ostream &os, const unordered_set<T> &S) {
     os << "{ ";
-    for (const auto &s : S)
+    for (auto &s : S)
         os << s << " ";
     return os << "}";
 }
@@ -87,7 +88,7 @@ ostream &operator<<(ostream &os, const unordered_set<T> &S) {
 template<class T>
 ostream &operator<<(ostream &os, const multiset<T> &S) {
     os << "{ ";
-    for (const auto &s : S)
+    for (auto &s : S)
         os << s << " ";
     return os << "}";
 }
@@ -95,7 +96,7 @@ ostream &operator<<(ostream &os, const multiset<T> &S) {
 template<class T>
 ostream &operator<<(ostream &os, const set<T> &S) {
     os << "{ ";
-    for (const auto &s : S)
+    for (auto &s : S)
         os << s << " ";
     return os << "}";
 }
@@ -108,7 +109,7 @@ ostream &operator<<(ostream &os, const pair<L, R> &P) {
 template<class L, class R>
 ostream &operator<<(ostream &os, const map<L, R> &M) {
     os << "{ ";
-    for (const auto &m : M)
+    for (auto &m : M)
         os << "(" << m.first << ":" << m.second << ") ";
     return os << "}";
 }
@@ -116,7 +117,7 @@ ostream &operator<<(ostream &os, const map<L, R> &M) {
 template<class L, class R>
 ostream &operator<<(ostream &os, const unordered_map<L, R> &M) {
     os << "{ ";
-    for (const auto &m : M)
+    for (auto &m : M)
         os << "(" << m.first << ":" << m.second << ") ";
     return os << "}";
 }
@@ -124,14 +125,14 @@ ostream &operator<<(ostream &os, const unordered_map<L, R> &M) {
 template<class T, size_t S>
 ostream &operator<<(ostream &os, const array<T, S> &A) {
     os << "[ ";
-    for (const auto &a : A)
+    for (auto &a : A)
         os << a << " ";
     return os << "]";
 }
 
 template<class T, size_t S>
 istream &operator<<(istream &is, array<T, S> &A) {
-    for (const auto &a : A)
+    for (auto &a : A)
         is >> a;
     return is;
 }
@@ -163,10 +164,11 @@ void __read(T &t, V &... v) {
 /*/---------------------------I/O Ports----------------------/*/
 
 /*/---------------------------myFunctions----------------------/*/
-int power(int x, int y) {
+int power(int x, int y, int mod = LLONG_MAX) {
+    x %= mod;
     int res = 1;
     while (y)
-        res = !(y & 1) ?: res * x, y >>= 1, x *= x;
+        res = !(y & 1) ? res : (res * x) % mod, y >>= 1, x *= x % mod;
     return res;
 }
 
