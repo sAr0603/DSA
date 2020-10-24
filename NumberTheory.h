@@ -389,16 +389,18 @@ namespace modulo {
             return inv_mod(val);
         }
 
-        __mint e(int64_t p) const {
+        __mint pow(int64_t p) const {
             if (p < 0)
-                return inv().e(-p);
+                return inv().pow(-p);
 
             __mint a = *this, result = 1;
 
             while (p > 0) {
                 if (p & 1)
                     result *= a;
+
                 p >>= 1;
+
                 if (p > 0)
                     a *= a;
             }
@@ -406,37 +408,59 @@ namespace modulo {
             return result;
         }
 
-        friend ostream &operator<<(ostream &os, const __mint &m) {
-            return os << m.val;
-        }
-
+        friend ostream &operator<<(ostream &os, const __mint &m) { return os << m.val; }
     };
 
     template<const int &modSeed>
-    class metrics {
-#define __MAX_NCR_SIZE__ (int)10e3
+    struct metrics {
         using mint = __mint<modSeed>;
-    public:
-        array<mint, __MAX_NCR_SIZE__ + 1> fac;
+        vector<mint> inv, fac, invFac;
+        int prepared_maximum = -1;
 
-        metrics() {
-            fac[0] = 1;
-            for (int i = 1; i <= __MAX_NCR_SIZE__; ++i)
-                fac[i] = (i * fac[i - 1]);
+        metrics(int64_t maximum) {
+            static int prepare_calls = 0;
+            if (prepare_calls++ == 0) {
+                // Make sure modSeed is prime, which is necessary for the inverse algorithm below.
+                for (int p = 2; p * p <= modSeed; p += p % 2 + 1)
+                    assert(modSeed % p != 0);
+                inv = {0, 1};
+                fac = invFac = {1, 1};
+                prepared_maximum = 1;
+            }
+
+            if (maximum > prepared_maximum) {
+                inv.resize(maximum + 1);
+                fac.resize(maximum + 1);
+                invFac.resize(maximum + 1);
+
+                for (int i = prepared_maximum + 1; i <= maximum; i++) {
+                    inv[i] = inv[modSeed % i] * (modSeed - modSeed / i);
+                    fac[i] = i * fac[i - 1];
+                    invFac[i] = inv[i] * invFac[i - 1];
+                }
+
+                prepared_maximum = int(maximum);
+            }
         }
 
-        mint modInverse(mint n) {
-            return n.e(modSeed - 2);
+        mint nCr(int64_t n, int64_t r) {
+            if (r < 0 || r > n) return 0;
+            return fac[n] * invFac[r] * invFac[n - r];
         }
 
-        mint nCr(unsigned long n, unsigned long r) {
-            if (r == 0)
-                return 1;
-            return fac[n] * modInverse(fac[r]) * modInverse(fac[n - r]);
+        mint inv_nCr(int64_t n, int64_t r) {
+            assert(0 <= r && r <= n);
+            return invFac[n] * fac[r] * fac[n - r];
         }
 
-        mint nPr(int n, int r) {
-            return (nCr(n, r) * fac[n]);
+        mint nPr(int64_t n, int64_t r) {
+            if (r < 0 || r > n) return 0;
+            return fac[n] * invFac[n - r];
+        }
+
+        mint inv_nPr(int64_t n, int64_t r) {
+            assert(0 <= r && r <= n);
+            return invFac[n] * fac[n - r];
         }
     };
 }
