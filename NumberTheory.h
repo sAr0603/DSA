@@ -265,7 +265,7 @@ namespace modulo {
 
     template<const intType &modSeed>
     struct __mint {
-        int val;
+        intType val;
 
         __mint(ll v = 0) {
             if (v < 0) v = v % modSeed + modSeed;
