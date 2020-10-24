@@ -387,6 +387,14 @@ namespace modulo {
 
         friend bool operator>=(const __mint &a, const __mint &b) { return a.val >= b.val; }
 
+        friend bool operator!(const __mint &a) { return !a.val; }
+
+        friend bool operator&&(const __mint &a, const __mint &b) { return a.val && b.val; }
+
+        friend bool operator||(const __mint &a, const __mint &b) { return (a.val || b.val) % modSeed; }
+
+        friend bool operator^(const __mint &a, const __mint &b) { return (a.val ^ b.val) % modSeed; }
+
         __mint inv() const {
             return inv_mod(val);
         }
