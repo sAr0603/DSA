@@ -8,7 +8,7 @@ using namespace std;
 /*/---------------------------imports----------------------/*/
 
 /*/---------------------------macros----------------------/*/
-#define int long long
+using ll = long long;
 #define endl '\n'
 #define MOD 1000000007
 #define isOdd(x) ((x)&1)
@@ -165,10 +165,14 @@ void __read(T &t, V &... v) {
 
 /*/---------------------------myFunctions----------------------/*/
 int power(int x, int y, int mod = LLONG_MAX) {
-    x %= mod;
     int res = 1;
-    while (y)
-        res = !(y & 1) ? res : (res * x) % mod, y >>= 1, x *= x % mod;
+    x = x % mod;
+    while (y > 0) {
+        if (y & 1)
+            res = (res * x) % mod;
+        y = y >> 1;
+        x = (x * x) % mod;
+    }
     return res;
 }
 
