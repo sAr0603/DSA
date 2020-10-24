@@ -283,7 +283,7 @@ public:
     metrics(int mod = LLONG_MAX) : mod(mod) {
         fac[0] = 1;
         for (int i = 1; i <= __MAX_NCR_SIZE__; ++i)
-            fac[i] = i * fac[i - 1] % mod;
+            fac[i] = (i * fac[i - 1]) % mod;
     }
 
     inline int modInverse(int n) {
