@@ -425,7 +425,7 @@ namespace modulo {
     struct metrics {
         using mint = __mint<modSeed>;
         vector<mint> inv, fac, invFac;
-        int prepared_maximum = -1;
+        ll prepared_maximum = -1;
 
         explicit metrics(ll maximum) {
             static int prepare_calls = 0;
