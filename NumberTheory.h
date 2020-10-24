@@ -428,7 +428,7 @@ namespace modulo {
         ll prepared_maximum = -1;
 
         explicit metrics(ll maximum) {
-            static int prepare_calls = 0;
+            static ll prepare_calls = 0;
             if (prepare_calls++ == 0) {
                 // Make sure modSeed is prime, which is necessary for the inverse algorithm below.
                 for (ll p = 2; p * p <= modSeed; p += p % 2 + 1)
