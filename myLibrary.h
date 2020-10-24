@@ -17,7 +17,7 @@ const int MOD = 1000000007;
 
 #define all(x) (x).begin(), (x).end()
 #define read(...)    \
-    int __VA_ARGS__; \
+    ll __VA_ARGS__; \
     __read(__VA_ARGS__)
 #ifndef ONLINE_JUDGE
 #define deb(...) cerr << "L(" << __LINE__ << ")*[" << #__VA_ARGS__ << "]: [", __write(__VA_ARGS__)
