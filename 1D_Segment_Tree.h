@@ -1,23 +1,16 @@
-#include <bits/stdc++.h>
-
-using namespace std;
-#define all(x) (x).begin(), (x).end()
-#define isOdd(x) ((x)&1)
-
-/*Making them global to enable maximum size possible -> Part of Iterative segNode class*/
-array<int, (int) (2 * 2 * 10e5)> segTree; // 1 - index based segTree
-array<int, (int) (2 * 2 * 10e5)> __lazy;//Change size of segTree by getting proper value from segSize(int n) fn
-/*IF YOU COMMENT OUT __lazy then fns depending on it will throw compiler errors*/
-
+#include "myLibrary.h"
 
 /*/---------------------------iterative-non-lazy----------------------/*/
 
+template<class T>
 class segNode {
+    /*Making them global to enable maximum size possible -> Part of Iterative segNode class*/
+    array<T, (int) (2 * 2 * 10e5)> segTree; // 1 - index based segTree
     int n;
 /*/---------------------------Identity&Operation----------------------/*/
-    const int EMPTY = numeric_limits<int>::max(); //Identity element
+    const T EMPTY = numeric_limits<int>::max(); //Identity element
 
-    inline int Q(int &a, int &b) {
+    inline T Q(int &a, int &b) {
         return min(a, b);
     }//Binary Operator Q
 /*/---------------------------Identity&Operation----------------------/*/
@@ -30,7 +23,7 @@ class segNode {
     int rangeQuery(int l, int r) {
         //by default this fn computes in range [l,r) , add +1 to r to -> [l,r]
         l += n - 1, r += n + 1;
-        auto qAns = EMPTY;
+        T qAns = EMPTY;
         while (l < r) {
             if (isOdd(l)) //if l is odd then in upper layer of calculation it wont be counted
                 qAns = Q(qAns, segTree[l++]);//Hence operate on lth node at present level only
@@ -62,7 +55,6 @@ public:
 
     void build(vector<int> &arr) {
         fill(all(segTree), EMPTY);
-        fill(all(__lazy), 0);//comment it out if not using lazy
         n = arr.size();
         __build_tree(arr);
     }//segTree builder
@@ -125,23 +117,23 @@ public: // frontend, edit according to requirements
 
 
 /*/---------------------------recursive-lazy----------------------/*/
-
+template<class T>
 class SEG_NODE {
-    vector<int> seg_tree;
-    vector<int> lazy;
-    vector<int> &arr;
+    vector<T> seg_tree;
+    vector<T> lazy;
+    vector<T> &arr;
     unsigned int n;
 
 /*/---------------------------Identity&Operation----------------------/*/
-    const int EMPTY = numeric_limits<int>::max(); //Identity element
+    const T EMPTY = numeric_limits<T>::max(); //Identity element
 
-    inline int Q(int &a, int &b) {
+    inline T Q(int &a, int &b) {
         return min(a, b);
     }//Binary Operator Q
 /*/---------------------------Identity&Operation----------------------/*/
 
 public:
-    explicit SEG_NODE(vector<int> &arr) : arr(arr), n(arr.size()) {
+    explicit SEG_NODE(vector<T> &arr) : arr(arr), n(arr.size()) {
         auto tree_height = 2 * closest_exp2(n) - 1;
         seg_tree.assign(tree_height, EMPTY);
         lazy.assign(tree_height, 0);
@@ -155,9 +147,9 @@ public:
     void print() {
         for (auto &i : seg_tree) {
             if (i == EMPTY)
-                cout << "\\0" << '\t';
+                cerr << "\\0" << '\t';
             else
-                cout << i << '\t';
+                cerr << i << '\t';
         }
         cout << endl;
     }
@@ -218,7 +210,7 @@ private:
         return Q(left_query, right_query);
     }
 
-    void pointUpdate(int pos, int value, int start, int end, int index) {
+    void pointUpdate(int pos, T value, int start, int end, int index) {
         if (pos < start || pos > end)
             return;//CASE III -> NO overlap
         if (start == end) {
@@ -248,7 +240,7 @@ private:
         return Q(left_query, right_query);
     }
 
-    void lazy_update(int l, int r, int value, int start, int end, int index) {
+    void lazy_update(int l, int r, T value, int start, int end, int index) {
         seg_tree[index] += lazy[index];//resolving lazy value//lazy value resolved
         if (start != end) {// propagating any previous lazy value while visiting unless we hit leaf node
             lazy[__leftOf(index)] += lazy[index];
