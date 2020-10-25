@@ -41,7 +41,7 @@ namespace numTheory {
     }
 }
 
-struct prime {
+namespace prime {
 #define MAX_SIEVE_SIZE (unsigned int)(10e6 + 1)
 
     class sieve {
@@ -52,11 +52,9 @@ struct prime {
 
     public:
         explicit sieve(int n = MAX_SIEVE_SIZE - 1) : n(n) {
+            assert(n <= MAX_SIEVE_SIZE);
+
             bitset<MAX_SIEVE_SIZE> flag;
-            if (MAX_SIEVE_SIZE <= n) {
-                cerr << "Stack Overflow : n > MAX_SIEVE_SIZE" << endl;
-                exit(69);
-            }
             inRangePfxQuery.resize(n + 1);
 
             for (int i = 2; i <= n; i++) {
@@ -105,39 +103,35 @@ struct prime {
 
     public:
         bool xisPrime(int x) {
+            assert(x >= 0);
             return query(x, x);
         }
 
-        int query(int A, int B) {
-            if (A > B) {
-                cerr << "err : invalid query.code=0 " << endl;
-                return -1;
-            }
-            if (B > n * n) {
-                cerr << "err : invalid query.code=1 " << endl;
-                return -1;
-            }  //edge and error handling
-            if (B <= n) {
-                return inRangePfxQuery[B] - inRangePfxQuery[abs(A - 1)];
+        int query(int begin, int end) {
+            assert(begin >= 0 && end >= 0);
+            assert(begin <= end);
+            assert(end < n * n);
+            if (end <= n) {
+                return inRangePfxQuery[end] - inRangePfxQuery[abs(begin - 1)];
             }
             int prime_count = 0;
-            if (A <= n) {
-                prime_count = inRangePfxQuery[n] - inRangePfxQuery[abs(A - 1)];
-                A = n + 1;
+            if (begin <= n) {
+                prime_count = inRangePfxQuery[n] - inRangePfxQuery[abs(begin - 1)];
+                begin = n + 1;
             }
-            A = A < 2 ? 2 : A;
-            vector<bool> prime_query_sieve(B - A + 1, false);
+            begin = begin < 2 ? 2 : begin;
+            vector<bool> prime_query_sieve(end - begin + 1, false);
             auto build = [&]() {
-                for (auto i = primeList.begin(); i != primeList.end() && (*i * (*i) < B);
+                for (auto i = primeList.begin(); i != primeList.end() && (*i * (*i) < end);
                      i++) {
-                    for (int j = 0; j <= B - A; j++) {
-                        if ((j + A) % (*i) == 0)
+                    for (int j = 0; j <= end - begin; j++) {
+                        if ((j + begin) % (*i) == 0)
                             prime_query_sieve[j] = true;
                     }
                 }
             };
             build();
-            for (int i = 0; i <= B - A; ++i)
+            for (int i = 0; i <= end - begin; ++i)
                 if (!prime_query_sieve[i]) prime_count++;
             return prime_count;
         }
@@ -173,7 +167,7 @@ struct prime {
         int s = numTheory::bitLength((n - 1) & (1 - n)) - 1;
         int d = n >> s;
 
-        vector<int> __millerRabinSeeds = {2, 325, 9375, 28178, 450775, 9780504, 1795265022};
+        static array<int, 7> __millerRabinSeeds = {2, 325, 9375, 28178, 450775, 9780504, 1795265022};
 
         for (auto &i : __millerRabinSeeds) {
             int p = power(i, d, n);
@@ -194,7 +188,7 @@ struct prime {
     }  //rabin-miller test for int64_t base numbers
 };
 
-struct combinatorics {
+namespace combinatorics {
     class nCr {
         vector<int> &arr;
         bitset<71> flag;
