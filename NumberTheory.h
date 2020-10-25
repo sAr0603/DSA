@@ -280,10 +280,10 @@ namespace modulo {
 
         __mint(int v) : __mint((ll) (v)) {}
 
-        __mint(unsigned v) : __mint((ll) (v)) {}
+        __mint(unsigned v) : __mint((unsigned ll) (v)) {}
 
-        static ll inv_mod(ll a, ll m = modSeed) {
-            ll g = m, r = a, x = 0, y = 1;
+        static intType inv_mod(intType a, intType m = modSeed) {
+            intType g = m, r = a, x = 0, y = 1;
             while (r != 0) {
                 int q = g / r;
                 g %= r;
@@ -318,7 +318,7 @@ namespace modulo {
             return *this;
         }
 
-        static unsigned fast_mod(ll x, ll m = modSeed) {
+        static unsigned fast_mod(unsigned ll x, unsigned m = modSeed) {
 #if !defined(_WIN32) || defined(_WIN64)
             return unsigned(x % m);
 #endif
@@ -337,9 +337,7 @@ namespace modulo {
             return *this;
         }
 
-        __mint &operator/=(const __mint &other) {
-            return *this *= other.inv();
-        }
+        __mint &operator/=(const __mint &other) { return *this *= other.inv(); }
 
         friend __mint operator+(const __mint &a, const __mint &b) { return __mint(a) += b; }
 
@@ -371,9 +369,7 @@ namespace modulo {
             return before;
         }
 
-        __mint operator-() const {
-            return val == 0 ? 0 : modSeed - val;
-        }
+        __mint operator-() const { return val == 0 ? 0 : modSeed - val; }
 
         friend bool operator==(const __mint &a, const __mint &b) { return a.val == b.val; }
 
@@ -395,9 +391,7 @@ namespace modulo {
 
         friend bool operator^(const __mint &a, const __mint &b) { return (a.val ^ b.val) % modSeed; }
 
-        __mint inv() const {
-            return inv_mod(val);
-        }
+        __mint inv() const { return inv_mod(val); }
 
         __mint pow(ll p) const {
             if (p < 0)
@@ -419,6 +413,9 @@ namespace modulo {
         }
 
         friend ostream &operator<<(ostream &os, const __mint &m) { return os << m.val; }
+
+//    private: //! Use only when needed to avoid silly bugs
+        friend intType operator%(const __mint &a, const __mint &b) { return (a.val % b.val) % modSeed; }
     };
 
     template<const intType &modSeed>
