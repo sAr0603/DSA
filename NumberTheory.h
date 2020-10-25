@@ -270,12 +270,12 @@ namespace modulo {
         __mint(ll v = 0) {
             if (v < 0) v = v % modSeed + modSeed;
             if (v >= modSeed) v %= modSeed;
-            val = int(v);
+            val = intType(v);
         }
 
         __mint(unsigned ll v) {
             if (v >= modSeed) v %= modSeed;
-            val = int(v);
+            val = intType(v);
         }
 
         __mint(int v) : __mint((ll) (v)) {}
