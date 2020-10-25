@@ -36,6 +36,7 @@ class segNode {
 
 //Very intuitive , same as __buildTree method but working with only the ancestors of the segTree[pos]
     void pointUpdate(int pos, int value) {
+        assert(pos > 0);
         segTree[pos += n] = value; // change value at desired leaf node
         while (pos > 1) {//have hit root
             pos = __parentOf(pos);//moving upto parent
@@ -103,10 +104,13 @@ public: // frontend, edit according to requirements
 /*0 - based queries and update f(l,r) -> operate on [l,r] ,l and r inclusive*/
 
     int query(int l, int r) {
+        assert(l <= r);
+        assert(l > 0);//Since 1-Based segTree
         return rangeQuery(l, r);
     }
 
     void update(int pos, int value) {
+        assert(pos > 0);//Since 1-Based segTree
         pointUpdate(pos, value);
     }
 
@@ -141,6 +145,8 @@ public:
     }
 
     int query(int l, int r) {
+        assert(l <= r);
+        assert(l >= 0);//Since 0-Based segTree
         return query(l, r, 0, n - 1, 1);
     }
 
@@ -155,14 +161,19 @@ public:
     }
 
     void update(int pos, int value) {//point update
+        assert(pos >= 0);//Since 0-Based segTree
         pointUpdate(pos, value, 0, n - 1, 1);
     }
 
     int lazy_query(int l, int r) {
+        assert(l <= r);
+        assert(l >= 0);//Since 0-Based segTree
         return lazy_query(l, r, 0, n - 1, 1);
     }
 
     void lazy_update(int l, int r, int value) {
+        assert(l <= r);
+        assert(l >= 0);//Since 0-Based segTree
         lazy_update(l, r, value, 0, n - 1, 1);
     }
 
