@@ -10,6 +10,7 @@ using namespace std;
 /*/---------------------------macros----------------------/*/
 #define endl '\n'
 #define ll long long
+using vi = vector<int>;
 const int MOD = 1000000007;
 #define isOdd(x) ((x)&1)
 #define isEven(x) (!((x)&1))
