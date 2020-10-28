@@ -10,10 +10,13 @@ using namespace std;
 /*/---------------------------macros----------------------/*/
 #define endl '\n'
 #define ll long long
-const ll MOD = 1000000007;
+const int MOD = 1000000007;
 #define isOdd(x) ((x)&1)
 #define isEven(x) (!((x)&1))
 #define all(x) (x).begin(), (x).end()
+#define range(a, b) for(size_t i = a; i < b; i+=x)
+#define xrange(a, b, x) for(size_t i = a; i < b; i+=x)
+
 #define read(...)    \
     ll __VA_ARGS__; \
     __read(__VA_ARGS__)
@@ -162,7 +165,9 @@ void __read(T &t, V &... v) {
 /*/---------------------------I/O Ports----------------------/*/
 
 /*/---------------------------myFunctions----------------------/*/
-ll power(ll x, ll y, ll mod = LLONG_MAX) {
+ll power(ll x, ll y, ll
+
+mod = LLONG_MAX) {
     ll res = 1;
     x = x % mod;
     while (y > 0) {
@@ -171,7 +176,8 @@ ll power(ll x, ll y, ll mod = LLONG_MAX) {
         y = y >> 1;
         x = (x * x) % mod;
     }
-    return res;
+    return
+            res;
 }
 
 mt19937_64 __MT19337GEN__(chrono::steady_clock::now().time_since_epoch().count());
