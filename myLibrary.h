@@ -14,8 +14,8 @@ const int MOD = 1000000007;
 #define isOdd(x) ((x)&1)
 #define isEven(x) (!((x)&1))
 #define all(x) (x).begin(), (x).end()
-#define range(a, b) for(size_t i = a; i < b; i++)
-#define xrange(a, b, x) for(size_t i = a; i < b; i+=x)
+#define range(id, a, b) for(size_t id = a; i < b; i++)
+#define xrange(id, a, b, x) for(size_t id = a; i < b; i+=x)
 
 #define read(...)    \
     ll __VA_ARGS__; \
