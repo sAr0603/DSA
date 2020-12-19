@@ -9,18 +9,20 @@ using namespace std;
 
 /*/---------------------------macros----------------------/*/
 #define endl '\n'
+
 using ll = long long;
 using lf = long double;
 template<typename T>
 using v = vector<T>;
+
 const int MOD = 1000000007;
 #define isOdd(x) ((x) &1)
 #define isEven(x) (!((x) &1))
 #define all(x) (x).begin(), (x).end()
 
 #define read(...) \
-	ll __VA_ARGS__; \
-	__read(__VA_ARGS__)
+  ll __VA_ARGS__; \
+  __read(__VA_ARGS__)
 #ifndef ONLINE_JUDGE
 #define deb(...) cerr << "L(" << __LINE__ << ")*[" << #__VA_ARGS__ << "]: [", __write(__VA_ARGS__)
 #else
@@ -28,9 +30,9 @@ const int MOD = 1000000007;
 #endif
 #define __timeStart auto __start_time = chrono::high_resolution_clock::now()
 #define __timeEnd                                                                                     \
-	auto __stop_time = std::chrono::high_resolution_clock::now();                                       \
-	auto __duration = std::chrono::duration_cast<std::chrono::nanoseconds>(__stop_time - __start_time); \
-	cerr << "Time taken : " << ((long double) __duration.count()) / ((long double) 1e9) << "s " << endl
+  auto __stop_time = std::chrono::high_resolution_clock::now();                                       \
+  auto __duration = std::chrono::duration_cast<std::chrono::nanoseconds>(__stop_time - __start_time); \
+  cerr << "Time taken : " << ((long double) __duration.count()) / ((long double) 1e9) << "s " << endl
 /*/---------------------------macros----------------------/*/
 
 /*/---------------------------STL overloaded I/O----------------------/*/
@@ -84,12 +86,13 @@ ostream &operator<<(ostream &os, const v<T> &V) {
       }
       os << "]" << endl;
   };
-  if (typeid(T) == typeid(v<int>) || typeid(T) == typeid(v<ll>) || typeid(T) == typeid(v<float>) || typeid(T) == typeid(v<lf>)) {
+  if (typeid(T) == typeid(v<int>) || typeid(T) == typeid(v<ll>) || typeid(T) == typeid(v<float>) ||
+      typeid(T) == typeid(v<lf>) || typeid(T) == typeid(v<bool>)) {
     matrixPrint(V);
     return os;
   }
   os << "[ ";
-  for (auto &e : V)
+  for (const auto &e : V)
     os << e << " ";
   return os << "]";
 }
