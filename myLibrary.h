@@ -36,7 +36,6 @@ const int MOD = 1000000007;
 #define execTime(x) { \
   __timeStart;          \
   x;                    \
-  cerr<<"Time taken by code "<<#x<<endl; \
   __timeEnd;            \
   }
 /*/---------------------------macros----------------------/*/
