@@ -33,6 +33,12 @@ const int MOD = 1000000007;
   auto __stop_time = std::chrono::high_resolution_clock::now();                                       \
   auto __duration = std::chrono::duration_cast<std::chrono::nanoseconds>(__stop_time - __start_time); \
   cerr << "Time taken : " << ((long double) __duration.count()) / ((long double) 1e9) << "s " << endl
+#define execTime(x) { \
+  __timeStart;          \
+  x;                    \
+  cerr<<"Time taken by code "<<#x<<endl; \
+  __timeEnd;            \
+  }
 /*/---------------------------macros----------------------/*/
 
 /*/---------------------------STL overloaded I/O----------------------/*/
