@@ -44,6 +44,12 @@ const int MOD = 1000000007;
 template<class T>
 istream &operator>>(istream &is, v<T> &V);
 
+template<class L, class R>
+istream &operator>>(istream &is, pair<L, R> &P);
+
+template<class T, size_t S>
+istream &operator>>(istream &is, array<T, S> &A);
+
 template<class T>
 ostream &operator<<(ostream &os, const v<T> &V);
 
@@ -66,15 +72,25 @@ template<class L, class R>
 ostream &operator<<(ostream &os, const unordered_map<L, R> &M);
 
 template<class T, size_t S>
-ostream &operator<<(ostream &os, array<T, S> &A);
-
-template<class T, size_t S>
-istream &operator<<(istream &is, array<T, S> &A);
+ostream &operator<<(ostream &os, const array<T, S> &A);
 
 template<class T>
 istream &operator>>(istream &is, v<T> &V) {
   for (auto &e : V)
     is >> e;
+  return is;
+}
+
+template<class L, class R>
+istream &operator>>(istream &is, pair<L, R> &P) {
+  cin >> P.first >> P.second;
+  return is;
+}
+
+template<class T, size_t S>
+istream &operator>>(istream &is, array<T, S> &A) {
+  for (auto &a : A)
+    is >> a;
   return is;
 }
 
@@ -155,12 +171,6 @@ ostream &operator<<(ostream &os, const array<T, S> &A) {
   return os << "]";
 }
 
-template<class T, size_t S>
-istream &operator<<(istream &is, array<T, S> &A) {
-  for (auto &a : A)
-    is >> a;
-  return is;
-}
 /*/---------------------------STL overloaded I/O----------------------/*/
 
 /*/---------------------------I/O Ports----------------------/*/
