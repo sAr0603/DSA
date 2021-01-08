@@ -193,7 +193,7 @@ private:
       return (index << 1) + 2;
     }//NEVER TOUCH
 
-    static inline bool isLeaf(start, end) {
+    static inline bool isLeaf(int start, int end) {
       return start == end;
     }
 
@@ -278,5 +278,6 @@ private:
       seg_tree[index] = Q(seg_tree[__leftOf(index)], seg_tree[__rightOf(index)]);
     }
 }; //Recursive Segment Tree with lazy propagation
+
 
 /*/---------------------------recursive-lazy----------------------/*/
