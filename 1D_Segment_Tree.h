@@ -130,6 +130,7 @@ class SEG_NODE {//0->indexed
 
 /*/---------------------------Identity&Operation----------------------/*/
     const int EMPTY = numeric_limits<int>::max(); //Identity element
+    const int LAZY_EMPTY = EMPTY;//change accordingly
 
     inline int Q(int &a, int &b) {
       return min(a, b);
@@ -197,12 +198,14 @@ private:
     }
 
     void resolve_lazy(int start, int end, int index) {
-      seg_tree[index] += lazy[index];//resolving lazy value
-      if (!isLeaf(start, end)) {// propagating any previous lazy value while visiting
-        lazy[leftOf(index)] += lazy[index];
-        lazy[rightOf(index)] += lazy[index];
-      }//we are sure that we wont any gross laziness to the tree hence this much resolve is enough
-      lazy[index] = 0;//lazy value resolved
+      if (lazy[index] != LAZY_EMPTY) {
+        seg_tree[index] += lazy[index];//resolving lazy value
+        if (!isLeaf(start, end)) {// propagating any previous lazy value while visiting
+          lazy[leftOf(index)] += lazy[index];
+          lazy[rightOf(index)] += lazy[index];
+        }//we are sure that we wont any gross laziness to the tree hence this much resolve is enough
+        lazy[index] = 0;//lazy value resolved
+      }
     }
 
     void build_tree(int start, int end, int index) {
