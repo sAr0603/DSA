@@ -1,14 +1,20 @@
 #include "myLibrary.h"
 
 class dsu {
-    gp_hash_table<int, int> parentOf, rankOf, minOf, maxOf, sizeOf;
+    gp_hash_table<int, int> parentOf,
+            rankOf,//rankOf[Dx] = longest path to the furthest leaf node
+    minOf,//minOf[Dx] = minimum element of the set with representative el Dx
+    maxOf,//maxOf[Dx] = maximum element of the set with representative el Dx
+    sizeOf;//sizeOf[Dx] = number of elements of the set with representative el Dx
     int n;
 
     inline bool isRoot(int x) {
-      return parentOf[x] == x;
+      return parentOf[x] == x;//self loop
     }
 
-    static inline bool mapHas(typeof(parentOf) &map, int key) {
+    template<typename mapType>
+    //map.contains(x) fn of cpp20
+    static inline bool mapHas(mapType &map, int key) {
       return map.find(key) != map.end();
     }
 
@@ -16,14 +22,14 @@ class dsu {
       maxOf.erase(D), minOf.erase(D), rankOf.erase(D), sizeOf.erase(D);
     }
 
-    inline void mergeProps(int Dx, int Dy) {
+    inline void mergeProps(int Dx, int Dy) {//merge properties of the two sets
       sizeOf[Dy] += sizeOf[Dx];
       minOf[Dy] = min(minOf[Dx], minOf[Dy]);
       maxOf[Dy] = max(maxOf[Dx], maxOf[Dy]);
     }
 
 public:
-    explicit dsu(const v<int> &p = {}) : n(p.size() + 1) {
+    explicit dsu(const v<int> &p = {}) : n(p.size() + 1) {//1-indexed representation
       if (n == 1)
         return;
 
@@ -64,12 +70,12 @@ public:
       minOf[Dx] = min(minOf[Dx], x), maxOf[Dx] = max(maxOf[Dx], x);//set max/min elements
     }
 
-    void insertNew(const v<int> &listOfX, int Dx) {
+    void insertNew(const v<int> &listOfX, int Dx) {//fn overloading both for single el and list of el
       for (auto &x : listOfX)
         insertNew(x, Dx);
     }
 
-    bool isPresent(int D) {
+    bool isPresent(int D) {//set with rep el D is present or not
       return rankOf.find(D) != rankOf.end();
     }
 
@@ -82,30 +88,30 @@ public:
     }
 
     int getMin(int D) {
-      D = find(D);
+      D = find(D);//if not rep el then find the set in which D belongs
       return minOf[D];
     }
 
     int getMax(int D) {
-      D = find(D);
+      D = find(D);//if not rep el then find the set in which D belongs
       return maxOf[D];
     }
 
     int getSize(int D) {
-      D = find(D);
+      D = find(D);//if not rep el then find the set in which D belongs
       return sizeOf[D];
     }
 
     int find(int x) {//Amortized T->O(log*n)
       if (isRoot(x))
-        return x;
+        return x;//rep el found
       return parentOf[x] = find(parentOf[x]);//?Path Compression
       //!directly linking all children/grandchildren of Dx with Dx itself rather than coming through a path
     }//O(log*n)
 
     void Union(int x, int y) {//Amortized T with Path compression->O(a(m,n))
       auto Dx = find(x), Dy = find(y);
-      assert(Dx != Dy);
+      assert(Dx != Dy);//both not of the same set
 
       if (rankOf[Dx] > rankOf[Dy])//?newRoot-> Dy
         swap(Dx, Dy);//if this is not done then newH = max(Dx.h,Dy.h) + 1.
@@ -119,5 +125,5 @@ public:
       //since Dx is no longer a parent
       delParent(Dx);
     }//!O(log*n) .Total T = O(nlog*n) -> T(n)//Since its fastens up with more queries
-   
+
 };
