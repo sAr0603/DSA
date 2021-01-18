@@ -59,6 +59,8 @@ public:
     }
 
     void insertNew(int x, int Dx) {
+      if (x == Dx)
+        return;
       if (mapHas(parentOf, Dx))
         assert(isRoot(Dx));//make sure Dx is a representative element only
       else
