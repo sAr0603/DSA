@@ -109,9 +109,10 @@ public:
       //!directly linking all children/grandchildren of Dx with Dx itself rather than coming through a path
     }//O(log*n)
 
-    void Union(int x, int y) {//Amortized T with Path compression->O(a(m,n))
+    bool Union(int x, int y) {//Amortized T with Path compression->O(a(m,n))
       auto Dx = find(x), Dy = find(y);
-      assert(Dx != Dy);//both not of the same set
+      if (Dx != Dy)
+        return false;//both of the same set
 
       if (rankOf[Dx] > rankOf[Dy])//?newRoot-> Dy
         swap(Dx, Dy);//if this is not done then newH = max(Dx.h,Dy.h) + 1.
@@ -124,6 +125,7 @@ public:
       mergeProps(Dx, Dy);
       //since Dx is no longer a parent
       delParent(Dx);
+      return true;
     }//!O(log*n) .Total T = O(nlog*n) -> T(n)//Since its fastens up with more queries
 
 };
