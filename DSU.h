@@ -112,7 +112,7 @@ public:
 
     bool Union(int x, int y) {//Amortized T with Path compression->O(a(m,n))
       auto Dx = find(x), Dy = find(y);
-      if (Dx != Dy)
+      if (Dx == Dy)
         return false;//both of the same set
 
       if (rankOf[Dx] > rankOf[Dy])//?newRoot-> Dy
