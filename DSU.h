@@ -85,6 +85,7 @@ public:
       rankOf[D] = 0;
       maxOf[D] = INT_MIN;
       minOf[D] = INT_MAX;
+      sizeOf[D] = 1;
     }
 
     int getMin(int D) {
