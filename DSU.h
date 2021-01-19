@@ -66,7 +66,6 @@ public:
       else
         makeSet(Dx);
       parentOf[x] = Dx;//directly attach newNode to Dx : Path compression heuristic
-      rankOf[x] = 0;//newNode is leaf of rankOf->0
       rankOf[Dx] = rankOf[Dx] || 1;//update rankOf of parentOf if not already atleast 1
       sizeOf[Dx]++;
       minOf[Dx] = min(minOf[Dx], x), maxOf[Dx] = max(maxOf[Dx], x);//set max/min elements
