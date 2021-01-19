@@ -12,10 +12,15 @@ using namespace std;
 
 using ll = long long;
 using lf = long double;
-template<typename T>
+
+template<typename T = int>
 using v = vector<T>;
 
-const int MOD = 1000000007;
+template<typename T = int, typename fn = greater<>>
+using min_heap = priority_queue<T, v<T>, fn>;
+
+
+const ll MOD = 1000000007;
 #define isOdd(x) ((x) &1)
 #define isEven(x) (!((x) &1))
 #define all(x) (x).begin(), (x).end()
