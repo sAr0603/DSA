@@ -19,7 +19,6 @@ using v = vector<T>;
 template<typename T = int, typename fn = greater<>>
 using min_heap = priority_queue<T, v<T>, fn>;
 
-
 const ll MOD = 1000000007;
 #define isOdd(x) ((x) &1)
 #define isEven(x) (!((x) &1))
@@ -75,6 +74,18 @@ ostream &operator<<(ostream &os, const map<L, R> &M);
 
 template<class L, class R>
 ostream &operator<<(ostream &os, const unordered_map<L, R> &M);
+
+template<class T>
+ostream &operator<<(ostream &os, const queue<T> &Q);
+
+template<class T>
+ostream &operator<<(ostream &os, const stack<T> &S);
+
+template<class T>
+ostream &operator<<(ostream &os, const forward_list<T> &A);
+
+template<class T>
+ostream &operator<<(ostream &os, const list<T> &A);
 
 template<class T, size_t S>
 ostream &operator<<(ostream &os, const array<T, S> &A);
@@ -172,6 +183,46 @@ template<class T, size_t S>
 ostream &operator<<(ostream &os, const array<T, S> &A) {
   os << "[ ";
   for (auto &a : A)
+    os << a << " ";
+  return os << "]";
+}
+
+template<class T>
+ostream &operator<<(ostream &os, const queue<T> &Q) {
+  forward_list<T> temp;
+  auto Qc = Q;
+  while (!Qc.empty()) {
+    temp.push_front(Qc.front());
+    Qc.pop();
+  }
+  os << temp;
+  return os;
+}
+
+template<class T>
+ostream &operator<<(ostream &os, const stack<T> &S) {
+  list<T> temp;
+  auto Sc = S;
+  while (!Sc.empty()) {
+    temp.push_back(Sc.top());
+    Sc.pop();
+  }
+  os << temp;
+  return os;
+}
+
+template<class T>
+ostream &operator<<(ostream &os, const forward_list<T> &A) {
+  os << "[ ";
+  for (const auto &a : A)
+    os << a << " ";
+  return os << "]";
+}
+
+template<class T>
+ostream &operator<<(ostream &os, const list<T> &A) {
+  os << "[ ";
+  for (const auto &a : A)
     os << a << " ";
   return os << "]";
 }
