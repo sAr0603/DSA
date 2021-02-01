@@ -272,6 +272,22 @@ void __read(T &t, V &... other) {
 /*/---------------------------I/O Ports----------------------/*/
 
 /*/---------------------------myFunctions----------------------/*/
+struct pair_hash {
+    static int betterHash(uint64_t x) {
+      x += 0x9e3779b97f4a7c15;
+      x = (x ^ (x >> 30)) * 0xbf58476d1ce4e5b9;
+      x = (x ^ (x >> 27)) * 0x94d049bb133111eb;
+      return x ^ (x >> 31);
+    }
+
+    template<class T1, class T2>
+    size_t operator()(const std::pair<T1, T2> &p) const {
+      auto h1 = hash<T1>{}(p.first);
+      auto h2 = hash<T2>{}(p.second);
+      return betterHash(h1 * 1111111 + h2);
+    }
+};
+
 ll power(ll x, ll y, ll mod = LLONG_MAX) {
   ll res = 1;
   x = x % mod;
