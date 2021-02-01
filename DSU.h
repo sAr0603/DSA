@@ -130,4 +130,8 @@ public:
       return true;
     }//!O(log*n) .Total T = O(nlog*n) -> T(n)//Since its fastens up with more queries
 
+    int size() {
+      return rankOf.size();
+    }
+    
 };
