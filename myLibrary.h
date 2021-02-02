@@ -9,6 +9,7 @@ using namespace std;
 
 /*/---------------------------macros----------------------/*/
 #define endl '\n'
+#define mt make_tuple
 
 using ll = long long;
 using lf = long double;
