@@ -12,12 +12,6 @@ class dsu {
       return parentOf[x] == x;//self loop
     }
 
-    template<typename mapType>
-    //map.contains(x) fn of cpp20
-    static inline bool mapHas(mapType &map, int key) {
-      return map.find(key) != map.end();
-    }
-
     inline void delParent(int D) {
       maxOf.erase(D), minOf.erase(D), rankOf.erase(D), sizeOf.erase(D);
     }
@@ -61,7 +55,7 @@ public:
     void insertNew(int x, int Dx) {
       if (x == Dx)
         return;
-      if (mapHas(parentOf, Dx))
+      if (itHas(parentOf, Dx))
         assert(isRoot(Dx));//make sure Dx is a representative element only
       else
         makeSet(Dx);
@@ -133,5 +127,4 @@ public:
     int size() {
       return rankOf.size();
     }
-    
 };
