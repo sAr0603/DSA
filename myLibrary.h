@@ -312,4 +312,10 @@ inline int64_t random() {
   uniform_int_distribution<ll> generator(LLONG_MIN, LLONG_MAX);
   return generator(__MT19337GEN__);
 }
+
+template<typename T, typename K>
+bool itHas(const T &container, const K &key) {
+  return container.find(key) != container.end();
+}
+
 /*/---------------------------myFunctions----------------------/*/
