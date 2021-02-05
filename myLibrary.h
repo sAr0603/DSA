@@ -8,10 +8,6 @@ namespace myLib {
 /*/---------------------------macros----------------------/*/
     using namespace __gnu_pbds;
     using namespace std;
-
-#define endl '\n'
-#define mt make_tuple
-
     using ll = long long;
     using lf = long double;
 
@@ -21,10 +17,20 @@ namespace myLib {
     template<typename T = int, typename fn = greater<>>
     using min_heap = priority_queue<T, v<T>, fn>;
 
+    template<typename T = int, typename V = int>
+    using umap = unordered_map<T, V>;
+
+    template<typename T = int, typename V = int, typename ...Rest>
+    using tup = tuple<T, V, Rest...>;
+
     const ll MOD = 1000000007;
+
+#define endl '\n'
+#define mt make_tuple
 #define isOdd(x) ((x) &1)
 #define isEven(x) (!((x) &1))
 #define all(x) (x).begin(), (x).end()
+#define allr(x) (x).rbegin(), (x).rend()
 
 #define read(...) \
   ll __VA_ARGS__; \
@@ -36,8 +42,8 @@ namespace myLib {
 #endif
 #define __timeStart auto __start_time = chrono::high_resolution_clock::now()
 #define __timeEnd                                                                                     \
-  auto __stop_time = std::chrono::high_resolution_clock::now();                                       \
-  auto __duration = std::chrono::duration_cast<std::chrono::nanoseconds>(__stop_time - __start_time); \
+  auto __stop_time = chrono::high_resolution_clock::now();                                       \
+  auto __duration = chrono::duration_cast<chrono::nanoseconds>(__stop_time - __start_time); \
   cerr << "Time taken : " << ((long double) __duration.count()) / ((long double) 1e9) << "s " << endl
 #define execTime(x) { \
   __timeStart;          \
@@ -55,6 +61,12 @@ namespace myLib {
 
     template<class T, size_t S>
     istream &operator>>(istream &is, array<T, S> &A);
+
+    template<class Head, class... Tail>
+    tuple<Head, Tail...> tuple_read_impl(istream &is);
+
+    template<class... Types>
+    istream &operator>>(istream &is, tuple<Types...> &tup);
 
     template<class T>
     ostream &operator<<(ostream &os, const v<T> &V);
@@ -93,7 +105,7 @@ namespace myLib {
     ostream &operator<<(ostream &os, const array<T, S> &A);
 
     template<class... T>
-    std::ostream &operator<<(std::ostream &os, const std::tuple<T...> &_tup);
+    ostream &operator<<(ostream &os, const tuple<T...> &_tup);
 
     template<class T>
     istream &operator>>(istream &is, v<T> &V) {
@@ -118,10 +130,8 @@ namespace myLib {
     template<class T>
     ostream &operator<<(ostream &os, const v<T> &V) {
       auto matrixPrint = [&](v<T> V) {
-          cout << "[ ";
+          os << "[" << endl;
           for (int i = 0; i < V.size(); ++i) {
-            if (i)
-              os << "  ";
             os << V[i];
             if (i != V.size() - 1)
               os << endl;
@@ -233,16 +243,32 @@ namespace myLib {
     }
 
     template<class TupType, size_t... I>
-    std::ostream &tuple_print(std::ostream &os, const TupType &_tup, std::index_sequence<I...>) {
+    ostream &tuple_print(ostream &os, const TupType &_tup, index_sequence<I...>) {
       os << "(";
-      (..., (os << (I == 0 ? "" : ", ") << std::get<I>(_tup)));
+      (..., (os << (I == 0 ? "" : ", ") << get<I>(_tup)));
       os << ")";
       return os;
     }
 
     template<class... T>
-    std::ostream &operator<<(std::ostream &os, const std::tuple<T...> &_tup) {
-      return tuple_print(os, _tup, std::make_index_sequence<sizeof...(T)>());
+    ostream &operator<<(ostream &os, const tuple<T...> &_tup) {
+      return tuple_print(os, _tup, make_index_sequence<sizeof...(T)>());
+    }
+
+    template<class Head, class... Tail>
+    tuple<Head, Tail...> tuple_read_impl(istream &is) {
+      Head val;
+      is >> val;
+      if constexpr (sizeof...(Tail) == 0) // this was the last tuple value
+        return tuple{val};
+      else
+        return tuple_cat(tuple{val}, tuple_read_impl<Tail...>(is));
+    }
+
+    template<class... Types>
+    istream &operator>>(istream &is, tuple<Types...> &tup) {
+      tup = tuple_read_impl<Types...>(is);
+      return is;
     }
 
 /*/---------------------------STL overloaded I/O----------------------/*/
@@ -283,7 +309,7 @@ namespace myLib {
         }
 
         template<class T1, class T2>
-        size_t operator()(const std::pair<T1, T2> &p) const {
+        size_t operator()(const pair<T1, T2> &p) const {
           auto h1 = hash<T1>{}(p.first);
           auto h2 = hash<T2>{}(p.second);
           return betterHash(h1 * 1111111 + h2);
@@ -314,6 +340,11 @@ namespace myLib {
       return generator(__MT19337GEN__);
     }
 
+    void fastIO() {
+      ios_base::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
+      cout << fixed << setprecision(25), cerr << fixed << setprecision(10);
+    }
+
     template<typename T, typename K>
     bool itHas(const T &container, const K &key) {
       return container.find(key) != container.end();
@@ -322,4 +353,39 @@ namespace myLib {
 /*/---------------------------myFunctions----------------------/*/
 }
 
+namespace std {
+    namespace {
+        template<class T>
+        inline void hash_combine(std::size_t &seed, T const &v) {
+          seed ^= hash<T>()(v) + 0x9e3779b9 + (seed << 6) + (seed >> 2);
+        }
+
+        template<class Tuple, size_t Index = std::tuple_size<Tuple>::value - 1>
+        struct HashValueImpl {
+            static void apply(size_t &seed, Tuple const &tuple) {
+              HashValueImpl<Tuple, Index - 1>::apply(seed, tuple);
+              hash_combine(seed, get<Index>(tuple));
+            }
+        };
+
+        template<class Tuple>
+        struct HashValueImpl<Tuple, 0> {
+            static void apply(size_t &seed, Tuple const &tuple) {
+              hash_combine(seed, get<0>(tuple));
+            }
+        };
+    }
+
+    template<typename ... TT>
+    struct hash<std::tuple<TT...>> {
+        size_t
+        operator()(std::tuple<TT...> const &tt) const {
+          size_t seed = 0;
+          HashValueImpl<std::tuple<TT...> >::apply(seed, tt);
+          return seed;
+        }
+    };
+}
+
 using namespace myLib;
+using namespace std;
