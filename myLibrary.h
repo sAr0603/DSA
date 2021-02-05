@@ -17,39 +17,40 @@ namespace myLib {
     template<typename T = int, typename fn = greater<>>
     using min_heap = priority_queue<T, v<T>, fn>;
 
-    template<typename T = int, typename V = int>
-    using umap = unordered_map<T, V>;
+    template<typename T = int, typename V = int, typename... Rest>
+    using umap = unordered_map<T, V, Rest...>;
 
-    template<typename T = int, typename V = int, typename ...Rest>
+    template<typename T = int, typename V = int, typename... Rest>
     using tup = tuple<T, V, Rest...>;
 
     const ll MOD = 1000000007;
 
 #define endl '\n'
 #define mt make_tuple
-#define isOdd(x) ((x) &1)
-#define isEven(x) (!((x) &1))
+#define isOdd(x) ((x)&1)
+#define isEven(x) (!((x)&1))
 #define all(x) (x).begin(), (x).end()
 #define allr(x) (x).rbegin(), (x).rend()
 
-#define read(...) \
-  ll __VA_ARGS__; \
-  __read(__VA_ARGS__)
+#define read(...)   \
+    ll __VA_ARGS__; \
+    __read(__VA_ARGS__)
 #ifndef ONLINE_JUDGE
 #define deb(...) cerr << "L(" << __LINE__ << ")*[" << #__VA_ARGS__ << "]: [", __write(__VA_ARGS__)
 #else
 #define deb(...)
 #endif
 #define __timeStart auto __start_time = chrono::high_resolution_clock::now()
-#define __timeEnd                                                                                     \
-  auto __stop_time = chrono::high_resolution_clock::now();                                       \
-  auto __duration = chrono::duration_cast<chrono::nanoseconds>(__stop_time - __start_time); \
-  cerr << "Time taken : " << ((long double) __duration.count()) / ((long double) 1e9) << "s " << endl
-#define execTime(x) { \
-  __timeStart;          \
-  x;                    \
-  __timeEnd;            \
-  }
+#define __timeEnd                                                                             \
+    auto __stop_time = chrono::high_resolution_clock::now();                                  \
+    auto __duration = chrono::duration_cast<chrono::nanoseconds>(__stop_time - __start_time); \
+    cerr << "Time taken : " << ((long double)__duration.count()) / ((long double)1e9) << "s " << endl
+#define execTime(x)  \
+    {                \
+        __timeStart; \
+        x;           \
+        __timeEnd;   \
+    }
 /*/---------------------------macros----------------------/*/
 
 /*/---------------------------STL overloaded I/O----------------------/*/
@@ -259,7 +260,7 @@ namespace myLib {
     tuple<Head, Tail...> tuple_read_impl(istream &is) {
       Head val;
       is >> val;
-      if constexpr (sizeof...(Tail) == 0) // this was the last tuple value
+      if constexpr (sizeof...(Tail) == 0)  // this was the last tuple value
         return tuple{val};
       else
         return tuple_cat(tuple{val}, tuple_read_impl<Tail...>(is));
@@ -280,7 +281,7 @@ namespace myLib {
     }
 
     template<class T, class... V>
-    void __write(const T &t, const V &... other) {
+    void __write(const T &t, const V &...other) {
       cerr << t;
       if (sizeof...(other))
         cerr << ", ";
@@ -293,7 +294,7 @@ namespace myLib {
     }
 
     template<class T, class... V>
-    void __read(T &t, V &... other) {
+    void __read(T &t, V &...other) {
       __read(t);
       __read(other...);
     }
@@ -351,7 +352,7 @@ namespace myLib {
     }
 
 /*/---------------------------myFunctions----------------------/*/
-}
+}  // namespace myLib
 
 namespace std {
     namespace {
@@ -374,18 +375,18 @@ namespace std {
               hash_combine(seed, get<0>(tuple));
             }
         };
-    }
+    }  // namespace
 
-    template<typename ... TT>
+    template<typename... TT>
     struct hash<std::tuple<TT...>> {
         size_t
         operator()(std::tuple<TT...> const &tt) const {
           size_t seed = 0;
-          HashValueImpl<std::tuple<TT...> >::apply(seed, tt);
+          HashValueImpl<std::tuple<TT...>>::apply(seed, tt);
           return seed;
         }
     };
-}
+}  // namespace std
 
 using namespace myLib;
 using namespace std;
