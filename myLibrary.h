@@ -20,6 +20,9 @@ namespace myLib {
     template<typename T = int, typename V = int, typename... Rest>
     using umap = unordered_map<T, V, Rest...>;
 
+    template<typename T = int, typename... Rest>
+    using uset = unordered_set<T, Rest...>;
+
     template<typename T = int, typename V = int, typename... Rest>
     using tup = tuple<T, V, Rest...>;
 
