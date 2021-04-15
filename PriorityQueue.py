@@ -33,7 +33,7 @@ class PriorityQueue:
 
 	def __init__(self, iterable: list[Any] = ()
 				 , key=lambda x: x
-				 , comp=lambda x, y: x < y
+				 , comp=min_heap_comp
 				 , e: Any = None):
 		"""
 		creates priority queue from any iterable or empty list []
