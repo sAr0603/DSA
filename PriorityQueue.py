@@ -2,8 +2,9 @@ import heapq
 import functools
 from typing import *
 
-min_heap_comp = lambda x,y : x < y
-max_heap_comp = lambda x,y : x > y
+min_heap_comp = lambda x, y: x < y
+max_heap_comp = lambda x, y: x > y
+
 
 @functools.total_ordering
 class heap_node:
