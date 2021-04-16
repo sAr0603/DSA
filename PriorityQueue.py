@@ -3,17 +3,9 @@ import functools
 from typing import *
 
 
-def min_heap_comp(x, y):
-	x < y
-
-
-def max_heap_comp(x, y):
-	x > y
-
-
 @functools.total_ordering
 class heap_node:
-	def __init__(self, val=0, key=lambda x: x, comp=min_heap_comp):
+	def __init__(self, val, key, comp):
 		self.val = val
 		self.key = key
 		self.comp = comp
@@ -39,7 +31,7 @@ class PriorityQueue:
 
 	def __init__(self, iterable: list[Any] = ()
 				 , key=lambda x: x
-				 , comp=min_heap_comp
+				 , comp=lambda x, y: x < y
 				 , e: Any = None):
 		"""
 		creates priority queue from any iterable or empty list []
