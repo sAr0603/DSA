@@ -2,13 +2,18 @@ import heapq
 import functools
 from typing import *
 
-min_heap_comp = lambda x, y: x < y
-max_heap_comp = lambda x, y: x > y
+
+def min_heap_comp(x, y):
+	x < y
+
+
+def max_heap_comp(x, y):
+	x > y
 
 
 @functools.total_ordering
 class heap_node:
-	def __init__(self, val, key, comp):
+	def __init__(self, val=0, key=lambda x: x, comp=min_heap_comp):
 		self.val = val
 		self.key = key
 		self.comp = comp
